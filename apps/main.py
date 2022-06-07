@@ -3,13 +3,11 @@ from starlette.middleware.cors import CORSMiddleware
 
 from apps.models import accuracy_models
 from apps.models import user_models
-from apps.routes import accuracy_router
+from apps.routes import accuracy_router, user_router
 
 from .database import Base, SessionLocal, engine
 
 app = FastAPI(openapi_url="/openapi.json")
-
-
 
 #Base.metadata.drop_all(bind=engine, tables=[accuracy_models.AccuracyModel.__table__])
 #Base.metadata.drop_all(bind=engine, tables=[user_models.UserModel.__table__])
@@ -25,6 +23,7 @@ origins = [
 
     "*"
 ]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -37,5 +36,7 @@ app.add_middleware(
 # app.router.prefix = "/api/v1"
 
 app.include_router(accuracy_router.router)
+app.include_router(user_router.user_router)
+
 # uvicorn apps.main:app --reload
 # uvicorn apps.main:app --reload --workers 1 --host 0.0.0.0 --port 8090
