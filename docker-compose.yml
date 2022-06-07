@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api_pln
+    command: >
+      sh -c "uvicorn apps.main:app --reload --host 0.0.0.0 --port 8090"
+    volumes:
+      - .:/code
+    restart: on-failure
+    ports:
+      - "8090:8090"
+    depends_on:
+      - db
+       
+  db:
+    image: postgres:13-alpine
+    ports:
+      - 5432:5432
+    volumes:
+       - ./postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=app
+ 
