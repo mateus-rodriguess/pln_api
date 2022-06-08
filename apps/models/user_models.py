@@ -1,21 +1,16 @@
 import uuid
 from datetime import datetime
 
-
 from apps.database import Base
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 
 
-def generate_uuid():
-    return str(uuid.uuid4())
-
-
 class UserModel(Base):
     __tablename__ = "users"
-    id = Column(UUID(as_uuid=True), primary_key=True)
-    #uuid = Column(String, name="uuid", primary_key=True,index=True, default=generate_uuid)
-    username = Column(String, unique=True, index=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    username = Column(String(20), unique=True, index=True, nullable=False)
     first_name = Column(String(40), nullable=False)
     last_name = Column(String(40), nullable=False)
     email = Column(String(150), unique=True, index=True, nullable=False)
