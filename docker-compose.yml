@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: api_pln
     command: >
-      sh -c "uvicorn apps.main:app --reload --host 0.0.0.0 --port 8090"
+      sh -c "uvicorn apps.main:app --reload --workers 2 --host 0.0.0.0 --port 8090"
     volumes:
       - .:/code
     restart: on-failure

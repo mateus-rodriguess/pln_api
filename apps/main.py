@@ -36,7 +36,7 @@ app.add_middleware(
 # app.router.prefix = "/api/v1"
 
 app.include_router(accuracy_router.router)
-app.include_router(user_router.user_router)
+app.include_router(user_router.router, prefix="/users")
 
 # uvicorn apps.main:app --reload
 # uvicorn apps.main:app --reload --workers 1 --host 0.0.0.0 --port 8090

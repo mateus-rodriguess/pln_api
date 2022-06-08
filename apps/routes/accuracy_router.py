@@ -21,5 +21,8 @@ async def accuracy(accuracy_resquest: accuracy_schema.Accuracy, db: Session = De
 
 @router.get("/", response_model=List[accuracy_schema.AccuracyResponse])
 async def home(db: Session = Depends(get_db)):
+    """
+    Home
+    """
     accuracys = accuracy_crud.list_accuracy(db)
     return list(accuracys)
