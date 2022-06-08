@@ -10,10 +10,8 @@ def add_accuracy(db: Session, accuracy_data: accuracy_schema.AccuracyResponse):
     """
 
     accuracy =  accuracy_response(text=accuracy_data.message)
-    print(accuracy)
-    db_accuracy = AccuracyModel(
-        accuracy= float(accuracy),
-        message=accuracy_data.message)
+    
+    db_accuracy = AccuracyModel(accuracy=accuracy, message=accuracy_data.message)
     
     db.add(db_accuracy)
     db.commit()

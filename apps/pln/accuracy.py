@@ -26,5 +26,5 @@ def accuracy_response(text: str):
     """
     text = encoder.encode(text)
     [[accuracy]] =  Dcnn.predict(np.array([text]))
-    
-    return accuracy
+   
+    return accuracy.astype(float)

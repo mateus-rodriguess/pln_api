@@ -9,7 +9,7 @@ class Accuracy(BaseModel):
 
 
 class AccuracyResponse(BaseModel):
-    accuracy: str = None
+    accuracy: float
     message: str
 
     class Config:
