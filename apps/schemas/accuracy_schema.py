@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class Accuracy(BaseModel):
-    message: str
+    message: str = "Feedback"
     
     class Config:
         orm_mode = True
@@ -10,7 +10,7 @@ class Accuracy(BaseModel):
 
 class AccuracyResponse(BaseModel):
     accuracy: float
-    message: str
+    message: str = "Feedback"
 
     class Config:
         orm_mode = True
