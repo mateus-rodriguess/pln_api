@@ -15,7 +15,13 @@
 * Endpoint: http://localhost:809/accuracy
 * HTTP Method: POST
 * HTTP Success Response Code: CREATED (200)
-  * Response payload
+* Request payload
+  ```json
+      {
+      "message": "Feedback"
+      }
+
+ * Response payload
   ```json
       {
         {
