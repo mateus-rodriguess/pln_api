@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     
     SECRET_KEY: str = "hfaushbfub4u23b4u32b4b324j3" # default
     ALGORITHM: str = "HS256" # default
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 80
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 2050
 
     class Config:
         case_sensitive = True
