@@ -7,6 +7,7 @@ data = {
 }
 
 url = "http://localhost:8090/accuracy"
+
 response = requests.post(url=url, json=data)
 
 print(response.content)
