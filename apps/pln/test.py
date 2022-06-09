@@ -1,3 +1,9 @@
+import logging, os
+logging.disable(logging.WARNING)
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+import logging
+logging.getLogger('tensorflow').disabled = True
+
 import numpy as np
 from dm.dcnn import DCNN
 import tensorflow_datasets as tfds
