@@ -6,6 +6,8 @@ __pycache__/
 postgres_data/
 # C extensions
 *.so
+
+# PLN e pesos
 my_weights.data-00000-of-00001
 ckpt-1.data-00000-of-00001
 ckpt-1.index
