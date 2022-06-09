@@ -1,8 +1,5 @@
 # pln_api
 
-## PLN
-
-
 ### how to use: 
   * install the [Docker](https://docs.docker.com/compose/install/)
   * Be sure to leave the door open
