@@ -3,8 +3,6 @@ from typing import Optional, List
 from sqlalchemy.orm import Session
 from apps.models.user_models import UserModel
 from apps.schemas.user_schemas import UserCreateSchema, UserSchema
-from apps.services.security import get_password_hash
-
 
 def get_all_users(db: Session) -> List[UserModel]:
     return db.query(UserModel).filter().all()
@@ -14,8 +12,12 @@ def get_user_by_username(db: Session, username: str) -> Optional[UserModel]:
     return db.query(UserModel).filter(UserModel.username == username).first()
 
 
-def add_user(db: Session, user_data: UserCreateSchema) -> UserSchema:
-    hashed_password = get_password_hash(user_data.password)
+def get_user_by_email(db: Session, email:str) -> UserModel:
+    return db.query(UserModel).filter(UserModel.email==email).first()
+
+
+def add_user(db: Session, user_data: UserCreateSchema,hashed_password) -> UserSchema:
+    
     db_user = UserModel(
         username=user_data.username,
         email=user_data.email,
