@@ -12,7 +12,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from starlette.status import HTTP_401_UNAUTHORIZED
-
+from apps.services.security import get_password_hash
 
 router = APIRouter()
 
@@ -26,7 +26,7 @@ async def users(db: Session = Depends(get_db)):
     return list(users)
 
 
-@router.get("/{username:str}", response_model=UserSchema)
+@router.get("/in/{username:str}", response_model=UserSchema)
 async def get_user(username: str, db: Session = Depends(get_db)) -> UserSchema:
     user = user_crud.get_user_by_username(db, username)
     if user:
@@ -59,17 +59,27 @@ async def login_for_access_token(db: Session = Depends(get_db), form_data: OAuth
 @router.post("/register", response_model=UserSchema)
 async def sign_up(user_data: UserCreateSchema, db: Session = Depends(get_db)):
     user = user_crud.get_user_by_username(db, user_data.username)
+    email =  user_crud.get_user_by_email(db, user_data.email)
+    
+    if email:
+        raise HTTPException(
+            status_code=409,
+            detail="Email exist"
+        )
+
     if user:
         raise HTTPException(
             status_code=409,
-            detail="username no exist",
+            detail="username exist",
         )
-
+    get_password_hash
     user_data.username = username_slugify(user_data.username)
-    new_user = user_crud.add_user(db, user_data)
+    hashed_password = get_password_hash(user_data.password)
+    
+    new_user = user_crud.add_user(db, user_data,hashed_password=hashed_password)
     return new_user
 
 
-# @router.get("/me", response_model=UserSchema)
-# async def read_users_me(current_user: UserSchema = Depends(get_current_active_user)):
-#     return current_user
+@router.get("/me", response_model=UserSchema)
+async def read_users_me(current_user: UserSchema = Depends(get_current_active_user)):
+     return current_user

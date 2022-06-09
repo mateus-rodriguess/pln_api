@@ -5,7 +5,7 @@ from apps.database import get_db
 from apps.schemas import accuracy_schema
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-
+from apps.services.security import get_current_user_is_admin
 router = APIRouter()
 
 
@@ -20,9 +20,9 @@ async def accuracy(accuracy_resquest: accuracy_schema.Accuracy, db: Session = De
 
 
 @router.get("/", response_model=List[accuracy_schema.AccuracyResponse])
-async def home(db: Session = Depends(get_db)):
+async def home(db: Session = Depends(get_db), current_user = Depends(get_current_user_is_admin)):
     """
     Home
-    """
+    """    
     accuracys = accuracy_crud.list_accuracy(db)
     return list(accuracys)
