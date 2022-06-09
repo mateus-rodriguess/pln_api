@@ -7,7 +7,7 @@ from apps.schemas.user_schemas import UserCreateSchema, UserSchema
 from apps.services.security import (ACCESS_TOKEN_EXPIRE_MINUTES,
                                     authenticate_user, create_access_token,
                                     get_current_active_user, get_current_user)
-from apps.services.username_validation import validation
+from apps.services.username_validation import username_slugify
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
@@ -65,7 +65,7 @@ async def sign_up(user_data: UserCreateSchema, db: Session = Depends(get_db)):
             detail="username no exist",
         )
 
-    user_data.username = validation(user_data.username)
+    user_data.username = username_slugify(user_data.username)
     new_user = user_crud.add_user(db, user_data)
     return new_user
 
