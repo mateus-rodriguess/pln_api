@@ -80,7 +80,7 @@ class Main():
         print("--- train test ---")
         X = data.iloc[:, 1].values
         y = data.iloc[:, 0].values
-        # trabalhando so com 15% da base de 1.6m, (drop 85 da base)
+        # trabalhando so com 40% da base de 1.6m, (drop 60 da base)
         test_size = 0.60
         # stratify, amostram estratificada, mandento a proporção, (pagina 43 livro)
         X, _, y, _ = train_test_split(X, y, test_size=test_size, stratify=y)
