@@ -19,5 +19,12 @@ RUN python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 #RUN pip install --no-cache-dir -r requirements.txt
 
+# Add entrypoint to the image
+COPY entrypoint.sh entrypoint.sh
+RUN chmod +x entrypoint.sh
+
 # copy project
 COPY . .
+
+# RUN entrypoit.sh
+CMD /code/entrypoint.sh
