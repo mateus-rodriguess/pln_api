@@ -16,7 +16,7 @@ class DCNN(keras.Model):
         self.trigram = layers.Conv1D(filters=nb_filters, kernel_size=3, padding='same', activation='relu')
 
         self.fourgram = layers.Conv1D(filters=nb_filters, kernel_size=4, padding='same', activation='relu')
-
+        
         self.pool = layers.GlobalMaxPool1D()
 
         self.dense_1 = layers.Dense(units=ffn_units, activation='relu')

@@ -17,7 +17,6 @@ def add_accuracy(db: Session, accuracy_data: accuracy_schema.AccuracyResponse):
     db.add(db_accuracy)
     db.commit()
     db.refresh(db_accuracy)
-    print("passou")
     return db_accuracy
 
 def list_accuracy(db: Session):
