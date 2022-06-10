@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 
-@router.post("/accuracy", status_code=status.HTTP_200_OK,response_model=accuracy_schema.AccuracyResponse)
+@router.post("/accuracy", status_code=status.HTTP_200_OK, response_model=accuracy_schema.AccuracyResponse)
 async def accuracy(accuracy_resquest: accuracy_schema.Accuracy, db: Session = Depends(get_db)):
     """
     Accuracy

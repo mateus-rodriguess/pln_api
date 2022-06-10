@@ -3,20 +3,21 @@ from sqlalchemy.orm import Session
 from apps.models.accuracy_models import AccuracyModel
 from apps.schemas import accuracy_schema
 from apps.pln.accuracy import accuracy_response
+from apps.services.translate_message import translate
 
 def add_accuracy(db: Session, accuracy_data: accuracy_schema.AccuracyResponse):
     """
     Save accuracy
     """
-
-    accuracy =  accuracy_response(text=accuracy_data.message)
+    message = translate(accuracy_data.message)
+    accuracy =  accuracy_response(text=message)
     
-    db_accuracy = AccuracyModel(accuracy=accuracy, message=accuracy_data.message)
+    db_accuracy = AccuracyModel(accuracy=accuracy, message=message)
     
     db.add(db_accuracy)
     db.commit()
     db.refresh(db_accuracy)
-
+    print("passou")
     return db_accuracy
 
 def list_accuracy(db: Session):
