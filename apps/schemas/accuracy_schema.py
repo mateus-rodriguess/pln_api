@@ -3,6 +3,8 @@ from pydantic import BaseModel
 
 class Accuracy(BaseModel):
     message: str = "Feedback"
+    save: bool = False
+    translate: bool = True
     
     class Config:
         orm_mode = True
