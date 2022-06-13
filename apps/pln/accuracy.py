@@ -20,7 +20,7 @@ Dcnn.load_weights(settings.PATH_MY_WEIGHTS).expect_partial()
 encoder = tfds.deprecated.text.SubwordTextEncoder.load_from_file(settings.VOCAB_FNAME)
 
 
-def accuracy_response(text: str):
+def accuracy_predict(text: str):
     """
     Accuracy predict
     """
