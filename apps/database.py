@@ -1,5 +1,3 @@
-import os
-
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -7,7 +5,12 @@ from sqlalchemy.orm import sessionmaker
 from apps.config import get_settings
 
 settings = get_settings()
-SQLALCHEMY_DATABASE_URL = settings.SQLALCHEMY_DATABASE_URL
+
+POSTGRES_PASSWORD = settings.POSTGRES_PASSWORD
+POSTGRES_DB = settings.POSTGRES_DB
+POSTGRES_USER = settings.POSTGRES_USER
+
+SQLALCHEMY_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db/{POSTGRES_DB}"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -21,4 +24,3 @@ def get_db():
         yield db
     finally:
         db.close()
-

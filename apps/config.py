@@ -10,19 +10,20 @@ class Settings(BaseSettings):
     PATH_MY_WEIGHTS: str = 'apps/pln/weights_folder/my_weights'
     TRAIN_CSV:  str = 'apps/pln/data/trainingandtestdata/train.csv'
     TEST_CSV: str = "apps/pln/data/trainingandtestdata/test.csv"
-    
-    SQLALCHEMY_DATABASE_URL: str = "postgresql://admin:admin@db/app"
 
-    SECRET_KEY: str = "hfaushbfub4u23b4u32b4b324j3" # default
-    ALGORITHM: str = "HS256" # default
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 2050
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
+    POSTGRES_DB: str
+
+    SECRET_KEY: str
+    ALGORITHM: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
 
     class Config:
         case_sensitive = True
         env_prefix = ''
         env_file = '../.env'
         env_file_encoding = 'utf-8'
-
 
 
 @lru_cache()
