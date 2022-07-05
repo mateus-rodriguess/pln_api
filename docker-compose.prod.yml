@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api_pln
+    command: >
+      sh -c "gunicorn apps.main:app -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8090"
+    volumes:
+      - .:/code
+    restart: on-failure
+    ports:
+      - "8090:8090"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    container_name: postgres_fast
+    ports:
+      - 5433:5432
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./.env
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    container_name: nginx_api_pln
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
