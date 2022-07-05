@@ -59,8 +59,8 @@ async def login_for_access_token(db: Session = Depends(get_db), form_data: OAuth
 @router.post("/register", response_model=UserSchema)
 async def sign_up(user_data: UserCreateSchema, db: Session = Depends(get_db)):
     user = user_crud.get_user_by_username(db, user_data.username)
-    email =  user_crud.get_user_by_email(db, user_data.email)
-    
+    email = user_crud.get_user_by_email(db, user_data.email)
+
     if email:
         raise HTTPException(
             status_code=409,
@@ -75,11 +75,12 @@ async def sign_up(user_data: UserCreateSchema, db: Session = Depends(get_db)):
     get_password_hash
     user_data.username = username_slugify(user_data.username)
     hashed_password = get_password_hash(user_data.password)
-    
-    new_user = user_crud.add_user(db, user_data,hashed_password=hashed_password)
+
+    new_user = user_crud.add_user(
+        db, user_data, hashed_password=hashed_password)
     return new_user
 
 
 @router.get("/me", response_model=UserSchema)
 async def read_users_me(current_user: UserSchema = Depends(get_current_active_user)):
-     return current_user
+    return current_user

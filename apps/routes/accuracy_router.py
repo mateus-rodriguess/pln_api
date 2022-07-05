@@ -28,3 +28,4 @@ async def home(db: Session = Depends(get_db), current_user=Depends(get_current_u
     """
     accuracys = accuracy_crud.list_accuracy(db)
     return list(accuracys)
+add
