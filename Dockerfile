@@ -1,4 +1,4 @@
-FROM python:3.8-slim
+FROM tensorflow/tensorflow:2.8.0
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -10,7 +10,7 @@ WORKDIR /code
 
 # install dependencies
 RUN apt update && \
-    apt install --no-install-recommends -y build-essential gcc g++  gfortran musl-dev ca-certificates && \
+    apt install --no-install-recommends -y build-essential musl-dev ca-certificates && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 # install dependencies

@@ -26,14 +26,6 @@ services:
     env_file:
       - ./.env
 
-  nginx:
-    build: ./nginx
-    ports:
-      - 1337:80
-    container_name: nginx_api_pln
-    depends_on:
-      - web
-
   redis:
     image: redis:7.0.2
     ports:
