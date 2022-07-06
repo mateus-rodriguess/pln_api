@@ -30,7 +30,6 @@ services:
     build: ./nginx
     ports:
       - 80:80
-    container_name: nginx_api_pln
     depends_on:
       - web
 

@@ -6,13 +6,13 @@ from apps.database import get_db
 from apps.schemas.user_schemas import UserCreateSchema, UserSchema
 from apps.services.security import (ACCESS_TOKEN_EXPIRE_MINUTES,
                                     authenticate_user, create_access_token,
-                                    get_current_active_user, get_current_user)
+                                    get_current_active_user, get_current_user,
+                                    get_password_hash)
 from apps.services.username_validation import username_slugify
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from starlette.status import HTTP_401_UNAUTHORIZED
-from apps.services.security import get_password_hash
 
 router = APIRouter()
 

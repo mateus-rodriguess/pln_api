@@ -40,3 +40,4 @@ app.include_router(user_router.router, prefix="/users")
 
 # uvicorn apps.main:app --reload
 # uvicorn apps.main:app --reload --workers 1 --host 0.0.0.0 --port 8090
+# docker-compose exec db psql --username=postgres --dbname=app
