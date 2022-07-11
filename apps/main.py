@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from apps.api.api_v1.endpoints import accuracy
 
 from apps.models import accuracy_models
 from apps.models import user_models
-from apps.routes import accuracy_router, user_router
+from apps.api.api_v1.api import api_router
 
 from .database import Base, SessionLocal, engine
 
@@ -33,10 +34,9 @@ app.add_middleware(
 )
 
 # prefix and version api
-# app.router.prefix = "/api/v1"
+app.router.prefix = "/api/v1"
 
-app.include_router(accuracy_router.router)
-app.include_router(user_router.router, prefix="/users")
+app.include_router(api_router)
 
 # uvicorn apps.main:app --reload
 # uvicorn apps.main:app --reload --workers 1 --host 0.0.0.0 --port 8090
