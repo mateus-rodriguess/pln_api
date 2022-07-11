@@ -14,6 +14,13 @@ class UserSchema(UserBase):
     class Config:
         orm_mode = True
 
+class UserResponseSchema(UserBase):
+    first_name: str
+    last_name: str
+    username: str
+    class Config:
+        orm_mode = True
+
 
 class UserCreateSchema(UserSchema):
     password: str
