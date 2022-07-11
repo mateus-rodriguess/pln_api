@@ -21,13 +21,13 @@ class Main():
 
     def train(self):
         print("--- train ---")
-        train_data = pd.read_csv('apps/pln/trainingandtestdata/train.csv', header=None,
+        train_data = pd.read_csv('apps/pln/data/trainingandtestdata/train.csv', header=None,
                                  names=self.cols, engine='python', encoding='latin1')
         return train_data
 
     def test_data(self):
         print("--- test data ---")
-        test_data = pd.read_csv("apps/pln/trainingandtestdata/test.csv", header=None,
+        test_data = pd.read_csv("apps/pln/data/trainingandtestdata/test.csv", header=None,
                                 names=self.cols, engine="python", encoding="latin1")
         return test_data
 
@@ -80,8 +80,8 @@ class Main():
         print("--- train test ---")
         X = data.iloc[:, 1].values
         y = data.iloc[:, 0].values
-        # trabalhando so com 40% da base de 1.6m, (drop 60 da base)
-        test_size = 0.60
+        # trabalhando so com 15% da base de 1.6m, (drop 85 da base)
+        test_size = 0.85
         # stratify, amostram estratificada, mandento a proporção, (pagina 43 livro)
         X, _, y, _ = train_test_split(X, y, test_size=test_size, stratify=y)
         return X, y

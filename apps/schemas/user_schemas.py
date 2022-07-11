@@ -1,3 +1,5 @@
+from hashlib import new
+from matplotlib.pyplot import cla
 from pydantic import BaseModel, EmailStr
 
 
@@ -19,3 +21,12 @@ class UserCreateSchema(UserSchema):
 
     class Config:
         orm_mode = False 
+
+
+class ChangePassword(BaseModel):
+    current_password: str
+    new_password: str
+    confirm_password: str
+
+    class Config:
+        orm_mode = True

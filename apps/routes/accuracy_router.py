@@ -7,7 +7,6 @@ from apps.services.security import get_current_user_is_admin
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-
 router = APIRouter()
 
 

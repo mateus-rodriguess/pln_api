@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from sqlalchemy.orm import Session
 from apps.models.user_models import UserModel
-from apps.schemas.user_schemas import UserCreateSchema, UserSchema
+from apps.schemas.user_schemas import UserCreateSchema, UserSchema, ChangePassword
 
 def get_all_users(db: Session) -> List[UserModel]:
     return db.query(UserModel).filter().all()
@@ -34,3 +34,4 @@ def add_user(db: Session, user_data: UserCreateSchema,hashed_password) -> UserSc
 def delete_user(db: Session, email) -> UserSchema:
     db.delete(email=email)
     db.commit()
+

@@ -16,6 +16,14 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
     POSTGRES_HOST: str
 
+    DATABASE_URI: str
+    # initial 
+    FIRST_SUPERUSER: str
+    FIRST_SUPERUSER_PASSWORD: str
+    FIRST_NAME: str
+    FIRST_LAST_NAME: str
+    FIRST_EMAIL: str
+    
     SECRET_KEY: str
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int

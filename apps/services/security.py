@@ -14,7 +14,7 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
-
+from apps.schemas.user_schemas import ChangePassword
 
 settings = get_settings()
 
@@ -83,3 +83,14 @@ async def get_current_active_user(current_user: UserModel = Depends(get_current_
 async def get_current_user_is_admin(current: UserModel = Depends(get_current_active_user)):
     if not current.is_admin:
         raise HTTPException(status_code=400, detail="User no adm")
+
+
+def change_password(data_user: ChangePassword,db:Session, user):
+
+    
+    if verify_password(data_user.current_password, user.hashed_password):
+        hashed_password = get_password_hash(data_user.new_password)
+        user.hashed_password = hashed_password
+        return user
+
+    

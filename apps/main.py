@@ -32,7 +32,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # prefix and version api
 # app.router.prefix = "/api/v1"
 

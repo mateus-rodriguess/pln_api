@@ -3,9 +3,11 @@ from typing import List
 
 from apps.crud import user_crud
 from apps.database import get_db
-from apps.schemas.user_schemas import UserCreateSchema, UserSchema
+from apps.schemas.user_schemas import (ChangePassword, UserCreateSchema,
+                                       UserResponseSchema, UserSchema)
 from apps.services.security import (ACCESS_TOKEN_EXPIRE_MINUTES,
-                                    authenticate_user, create_access_token,
+                                    authenticate_user, change_password,
+                                    create_access_token,
                                     get_current_active_user, get_current_user,
                                     get_password_hash)
 from apps.services.username_validation import username_slugify
@@ -17,7 +19,7 @@ from starlette.status import HTTP_401_UNAUTHORIZED
 router = APIRouter()
 
 
-@router.get("", response_model=List[UserSchema])
+@router.get("", response_model=List[UserResponseSchema])
 async def users(db: Session = Depends(get_db)):
     """
     Get users
@@ -26,8 +28,8 @@ async def users(db: Session = Depends(get_db)):
     return list(users)
 
 
-@router.get("/in/{username:str}", response_model=UserSchema)
-async def get_user(username: str, db: Session = Depends(get_db)) -> UserSchema:
+@router.get("/in/{username:str}", response_model=UserResponseSchema)
+async def get_user(username: str, db: Session = Depends(get_db)):
     user = user_crud.get_user_by_username(db, username)
     if user:
         print(user)
@@ -84,3 +86,23 @@ async def sign_up(user_data: UserCreateSchema, db: Session = Depends(get_db)):
 @router.get("/me", response_model=UserSchema)
 async def read_users_me(current_user: UserSchema = Depends(get_current_active_user)):
     return current_user
+
+
+@router.post("/reset-password/{username:str}")
+async def reset_password(username: str, data_user: ChangePassword, db: Session = Depends(get_db)):
+    user = user_crud.get_user_by_username(db=db, username=username)
+    if not user.username:
+        raise HTTPException(
+            status_code=409,
+            detail="username no exist"
+        )
+    if data_user.new_password != data_user.confirm_password:
+        raise HTTPException(
+            status_code=409,
+            detail="different password"
+        )
+
+    user = change_password(data_user=data_user, db=db, user=user)
+    db.add(user)
+    db.commit()
+    return {"detail": "Password updated successfully"}
