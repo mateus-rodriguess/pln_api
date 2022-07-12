@@ -1,4 +1,3 @@
-from sys import api_version
 from fastapi import APIRouter
 
 from apps.api.api_v1.endpoints import accuracy, login, users
