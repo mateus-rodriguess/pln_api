@@ -16,9 +16,10 @@
   * Request payload
     ```json
         {
-        "message": "Feedback"
+          "message": "I hate you",
+          "save": false,
+          "translate": false
         }
-
   * Response payload
     ```json
         {
