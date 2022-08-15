@@ -10,7 +10,7 @@ from apps.models.user_models import UserModel
 from apps.schemas.token_schemas import TokenDataSchema
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError, jwt 
+from jose import JWTError, jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
@@ -63,13 +63,14 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
+        username: str = payload.get("sub")  # type: ignore
         if username is None:
             raise credentials_exception
         token_data = TokenDataSchema(username=username)
     except JWTError:
         raise credentials_exception
-    user = user_crud.get_user_by_username(db, username=token_data.username)
+    user = user_crud.get_user_by_username(
+        db, username=token_data.username)  # type: ignore
     if user is None:
         raise credentials_exception
     return user
@@ -80,17 +81,15 @@ async def get_current_active_user(current_user: UserModel = Depends(get_current_
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
 
+
 async def get_current_user_is_admin(current: UserModel = Depends(get_current_active_user)):
     if not current.is_admin:
         raise HTTPException(status_code=400, detail="User no adm")
 
 
-def change_password(data_user: ChangePassword,db:Session, user):
+def change_password(data_user: ChangePassword, db: Session, user):
 
-    
     if verify_password(data_user.current_password, user.hashed_password):
         hashed_password = get_password_hash(data_user.new_password)
         user.hashed_password = hashed_password
         return user
-
-    
