@@ -9,12 +9,14 @@ from sqlalchemy.orm import Session
 from starlette.status import HTTP_401_UNAUTHORIZED
 from fastapi_redis_cache import FastApiRedisCache, cache
 from apps.config import get_settings
-
+from apps.services.security import get_current_user_is_admin
 settings = get_settings()
 
 router = APIRouter()
 
 LOCAL_REDIS_URL = settings.LOCAL_REDIS_URL
+
+
 @router.on_event("startup")
 def startup():
     redis_cache = FastApiRedisCache()
@@ -25,9 +27,10 @@ def startup():
         ignore_arg_types=[Request, Response, Session]
     )
 
+
 @router.get("/", response_model=List[UserResponseSchema])
 @cache()
-async def users(db: Session = Depends(get_db)):
+async def users(db: Session = Depends(get_db), current_user=Depends(get_current_user_is_admin)):
     """
     Get users
     """
@@ -47,4 +50,3 @@ async def get_user(username: str, db: Session = Depends(get_db)):
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User no exist",
         )
-

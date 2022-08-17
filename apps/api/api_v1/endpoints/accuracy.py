@@ -20,10 +20,18 @@ async def accuracy(accuracy_resquest: accuracy_schema.Accuracy, db: Session = De
     return accuracy
 
 
-@router.get("/", response_model=List[accuracy_schema.AccuracyResponse], status_code=status.HTTP_200_OK)
-async def list(db: Session = Depends(get_db), current_user=Depends(get_current_user_is_admin)):
+@router.get("/", response_model=List[accuracy_schema.AccuracyResponse],  status_code=status.HTTP_200_OK)
+def list(limit: int = 10, db: Session = Depends(get_db)):
     """
     Home
     """
-    accuracys = accuracy_crud.list_accuracy(db)
-    return list(accuracys)
+
+    accuracys = accuracy_crud.list_accuracy(db=db, limit=limit)
+
+    if accuracys.count() == 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Not found",
+        )
+    else:
+        return list(accuracys)
