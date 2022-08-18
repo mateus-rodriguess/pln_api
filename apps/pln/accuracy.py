@@ -11,17 +11,14 @@ import tensorflow_datasets as tfds
 import numpy as np
 
 
-settings = get_settings()
-
-Dcnn = DCNN()
-Dcnn.built = True
-
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-
 def accuracy_predict(text: str):
     """
     Accuracy predict
     """
+    settings = get_settings()
+
+    Dcnn = DCNN()
+    Dcnn.built = True
     try:
         # if the error of the file does not exist it returns float 0.0
         Dcnn.load_weights(settings.PATH_MY_WEIGHTS).expect_partial()
