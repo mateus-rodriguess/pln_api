@@ -1,17 +1,14 @@
 from datetime import datetime
 from sqlalchemy import Column, Float, Integer, String, Boolean, DateTime, column
-
+from sqlalchemy.dialects.postgresql import UUID
 from apps.database import Base
-
-
-def generate_uuid():
-    return str(uuid.uuid4())
+import uuid
+from sqlalchemy.dialects.postgresql import UUID
 
 
 class AccuracyModel(Base):
     __tablename__ = 'accuracys'
-    id = Column(String, default=generate_uuid,
-                primary_key=True, index=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
 
     accuracy = Column(Float)
     message = Column(String)
