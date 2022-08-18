@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.post("/", status_code=status.HTTP_200_OK, response_model=accuracy_schema.AccuracyResponse)
-async def accuracy(accuracy_resquest: accuracy_schema.Accuracy, db: Session = Depends(get_db)):
+def accuracy(accuracy_resquest: accuracy_schema.Accuracy, db: Session = Depends(get_db)):
     """
     Accuracy
     """
@@ -34,4 +34,4 @@ def list(limit: int = 10, db: Session = Depends(get_db)):
             detail="Not found",
         )
     else:
-        return list(accuracys)
+        return list(accuracys)  # type: ignore
