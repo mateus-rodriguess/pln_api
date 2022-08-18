@@ -1,6 +1,5 @@
 import logging
 import os
-# ok
 logging.disable(logging.WARNING)
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 logging.getLogger('tensorflow').disabled = True
@@ -17,6 +16,7 @@ settings = get_settings()
 Dcnn = DCNN()
 Dcnn.built = True
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 def accuracy_predict(text: str):
     """
@@ -32,4 +32,5 @@ def accuracy_predict(text: str):
         [[accuracy]] = Dcnn.predict(np.array([text]))
         return accuracy.astype(float)
     except Exception as erro:
+        print(erro)
         return 0.0
