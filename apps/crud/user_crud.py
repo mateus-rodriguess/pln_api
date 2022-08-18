@@ -14,7 +14,7 @@ def get_user_by_username(db: Session, username: str) -> Optional[UserModel]:
 
 
 def get_user_by_email(db: Session, email: str) -> UserModel:
-    return db.query(UserModel).filter(UserModel.email == email).first()
+    return db.query(UserModel).filter(UserModel.email == email).first()  # type: ignore
 
 
 def add_user(db: Session, user_data: UserCreateSchema, hashed_password) -> UserSchema:
@@ -33,5 +33,5 @@ def add_user(db: Session, user_data: UserCreateSchema, hashed_password) -> UserS
 
 
 def delete_user(db: Session, email: str):
-    db.delete(email=email)
+    db.delete(email=email)  # type: ignore
     db.commit()
