@@ -6,7 +6,7 @@ from apps.models import accuracy_models
 from apps.models import user_models
 from apps.api.api_v1.api import api_router
 
-from .database import Base, SessionLocal, engine
+from .db.database import Base, SessionLocal, engine
 
 
 app = FastAPI(openapi_url="/openapi.json", debug=True)
