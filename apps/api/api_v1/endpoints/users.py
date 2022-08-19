@@ -1,15 +1,15 @@
 from typing import List
 
 from apps.crud import user_crud
-from apps.database import get_db
+from apps.api.api_v1.deps import get_db
 from apps.schemas.user_schemas import UserResponseSchema
 from fastapi import (APIRouter, Depends, HTTPException, Request, Response,
                      status)
 from sqlalchemy.orm import Session
 from starlette.status import HTTP_401_UNAUTHORIZED
 from fastapi_redis_cache import FastApiRedisCache, cache
-from apps.config import get_settings
-from apps.services.security import get_current_user_is_admin
+from apps.core.config import get_settings
+from apps.core.security import get_current_user_is_admin
 settings = get_settings()
 
 router = APIRouter()
@@ -43,7 +43,6 @@ async def users(db: Session = Depends(get_db), current_user=Depends(get_current_
 async def get_user(username: str, db: Session = Depends(get_db)):
     user = user_crud.get_user_by_username(db, username)
     if user:
-        print(user)
         return user
     else:
         raise HTTPException(

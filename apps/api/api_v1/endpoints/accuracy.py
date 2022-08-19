@@ -1,9 +1,9 @@
 from typing import List
 
 from apps.crud import accuracy_crud
-from apps.database import get_db
+from apps.api.api_v1.deps import get_db
 from apps.schemas import accuracy_schema
-from apps.services.security import get_current_user_is_admin
+from apps.core.security import get_current_user_is_admin
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
