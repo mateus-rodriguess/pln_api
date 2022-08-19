@@ -6,7 +6,7 @@ logging.getLogger('tensorflow').disabled = True
 
 
 from apps.pln.dm.dcnn import DCNN
-from apps.config import get_settings
+from apps.core.config import get_settings
 import tensorflow_datasets as tfds
 import numpy as np
 
