@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     POSTGRES_HOST: str
 
     DATABASE_URI: str
+    DATABASE_TEST_URI: str
     # initial 
     FIRST_SUPERUSER: str
     FIRST_SUPERUSER_PASSWORD: str
