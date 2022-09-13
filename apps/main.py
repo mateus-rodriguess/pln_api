@@ -11,7 +11,7 @@ from .db.database import Base, SessionLocal, engine
 
 app = FastAPI(openapi_url="/openapi.json", debug=True)
 
-#Base.metadata.drop_all(bind=engine, tables=[
+# Base.metadata.drop_all(bind=engine, tables=[
 #    accuracy_models.AccuracyModel.__table__])
 #Base.metadata.drop_all(bind=engine, tables=[user_models.UserModel.__table__])
 

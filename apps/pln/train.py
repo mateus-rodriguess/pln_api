@@ -15,20 +15,21 @@ from clean_tt.clean_tweets import clean_tweets, clean_tweets2
 from dm.dcnn import DCNN
 
 
-
 class Main():
     cols = ['sentiment', 'id', 'date', 'query', 'user', 'text']
 
     def train(self):
         print("--- train ---")
-        train_data = pd.read_csv('apps/pln/data/trainingandtestdata/train.csv', header=None,
-                                 names=self.cols, engine='python', encoding='latin1')
+        train_data = pd.read_csv('apps/pln/data/trainingandtestdata/train.csv',
+                                 header=None, names=self.cols, engine='python',
+                                 encoding='latin1')
         return train_data
 
     def test_data(self):
         print("--- test data ---")
-        test_data = pd.read_csv("apps/pln/data/trainingandtestdata/test.csv", header=None,
-                                names=self.cols, engine="python", encoding="latin1")
+        test_data = pd.read_csv("apps/pln/data/trainingandtestdata/test.csv",
+                                header=None, names=self.cols, engine="python",
+                                encoding="latin1")
         return test_data
 
     def data_drop(self, data):
@@ -56,7 +57,8 @@ class Main():
 
     def token(self, data_clean):
         print("--- token ---")
-        tokenizer = tfds.deprecated.text.SubwordTextEncoder.build_from_corpus(data_clean, target_vocab_size=2**16)
+        tokenizer = tfds.deprecated.text.SubwordTextEncoder.build_from_corpus(
+            data_clean, target_vocab_size=2**16)
         vocab_fname = "apps/pln/services/ttVocab"
         tokenizer.save_to_file(vocab_fname)
         return tokenizer
@@ -66,9 +68,10 @@ class Main():
         max_len = max([len(sentence) for sentence in data_inputs])
         return max_len
 
-    def data_inputs_pad_sequences(self, data_inputs,max_len):
+    def data_inputs_pad_sequences(self, data_inputs, max_len):
         print("--- data_inputs pad sequences ---")
-        data_inputs = tf.keras.preprocessing.sequence.pad_sequences(data_inputs, value=0, padding='post', maxlen=max_len)
+        data_inputs = tf.keras.preprocessing.sequence.pad_sequences(
+            data_inputs, value=0, padding='post', maxlen=max_len)
         return data_inputs
 
     def data_input(self, tokenizer, data_clean):
@@ -82,7 +85,8 @@ class Main():
         y = data.iloc[:, 0].values
         # trabalhando so com 15% da base de 1.6m, (drop 85 da base)
         test_size = 0.85
-        # stratify, amostram estratificada, mandento a proporção, (pagina 43 livro)
+        # stratify, amostram estratificada, mandento a proporção,
+        #  (pagina 43 livro)
         X, _, y, _ = train_test_split(X, y, test_size=test_size, stratify=y)
         return X, y
 
@@ -99,20 +103,22 @@ class Main():
         X, y = self.train_test(data)
 
         data_labels = self.data_labels(y)
-        
+
         data_clean = self.data_clean_tt(X)
         self.save_tt(data_clean)
         data_clean = self.list_txt_data_clean()
-        
+
         tokenizer = self.token(data_clean)
         vocab_fname = "apps/pln/services/ttVocab"
-        tokenizer = tfds.deprecated.text.SubwordTextEncoder.load_from_file(vocab_fname)
+        tokenizer = tfds.deprecated.text.SubwordTextEncoder.load_from_file(
+            vocab_fname)
 
         data_inputs, tokenizer = self.data_input(tokenizer, data_clean)
         max_len = self.max_len_data_inputs(data_inputs)
         data_inputs = self.data_inputs_pad_sequences(data_inputs, max_len)
 
-        train_inputs, test_inputs, train_labels, test_labels = train_test_split(data_inputs, data_labels, test_size=0.2, stratify=data_labels)
+        train_inputs, test_inputs, train_labels, test_labels = train_test_split(
+            data_inputs, data_labels, test_size=0.2, stratify=data_labels)
 
         vocab_size = tokenizer.vocab_size
         emb_dim = 200
@@ -123,28 +129,35 @@ class Main():
         dropout_rate = 0.2
         nb_epochs = 5
 
-        Dcnn = DCNN(vocab_size=vocab_size, emb_dim=emb_dim, nb_filters=nb_filters,ffn_units=ffn_units,
-                    nb_classes=nb_classes, dropout_rate=dropout_rate)
+        Dcnn = DCNN(vocab_size=vocab_size, emb_dim=emb_dim, 
+                    nb_filters=nb_filters,
+                    ffn_units=ffn_units, nb_classes=nb_classes, 
+                    dropout_rate=dropout_rate)
 
         if nb_classes == 2:
-            Dcnn.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+            Dcnn.compile(loss='binary_crossentropy',
+                         optimizer='adam', metrics=['accuracy'])
         else:
             print("--- mais de 2 classes")
-            Dcnn.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+            Dcnn.compile(loss='sparse_categorical_crossentropy',
+                         optimizer='adam', metrics=['accuracy'])
 
         checkpoint_path = "apps/pln/checkpoint"
         ckpt = tf.train.Checkpoint(Dcnn=Dcnn)
-        ckpt_manager = tf.train.CheckpointManager(ckpt, checkpoint_path, max_to_keep=5)
+        ckpt_manager = tf.train.CheckpointManager(
+            ckpt, checkpoint_path, max_to_keep=5)
 
         if ckpt_manager.latest_checkpoint:
             ckpt.restore(ckpt_manager.latest_checkpoint)
             print('Latest checkpoint restored')
 
-        Dcnn.fit(train_inputs, train_labels, batch_size=batch_size, epochs=nb_epochs, verbose=1, validation_split=0.10)
+        Dcnn.fit(train_inputs, train_labels, batch_size=batch_size,
+                 epochs=nb_epochs, verbose=1, validation_split=0.10)
         ckpt_manager.save()
 
         print("-- evaluate --")
-        results = Dcnn.evaluate(test_inputs, test_labels, batch_size=batch_size)
+        results = Dcnn.evaluate(
+            test_inputs, test_labels, batch_size=batch_size)
         print(results)
 
         print("-- y_pred_test ---")
@@ -162,13 +175,14 @@ class Main():
         path = 'apps/pln/weights_folder/my_weights'
         Dcnn.save_weights(path, save_format='tf')
         print('Model Saved!')
-        
+
         print()
         print("---------- testes -------------------")
         text = 'i hate you'
 
         vocab_fname = "apps/pln/services/ttVocab"
-        encoder = tfds.deprecated.text.SubwordTextEncoder.load_from_file(vocab_fname)
+        encoder = tfds.deprecated.text.SubwordTextEncoder.load_from_file(
+            vocab_fname)
         text = encoder.encode(text)
         print("-"*50)
         value = Dcnn(np.array([text]), training=False).numpy()
