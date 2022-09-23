@@ -3,7 +3,7 @@ import re
 from bs4 import BeautifulSoup
 
 
-def clean_texts(text):
+def clean_text(text):
     text = str(text)
     #text = BeautifulSoup(str(text), 'lxml').get_text()
     text = re.sub(r"@[A-Za-z0-9]+", ' ', text)
@@ -13,7 +13,7 @@ def clean_texts(text):
     return text
 
 
-def clean_texts2(text, nlp):
+def clean_text2(text, nlp):
     text = text.lower()
     # document = nlp(text)
     # words = []

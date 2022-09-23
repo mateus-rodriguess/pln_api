@@ -11,7 +11,7 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
-from clean_tt.clean_tweets import clean_tweets, clean_tweets2
+from apps.pln.clean_tt.clean_text import clean_tweets, clean_tweets2
 from dm.dcnn import DCNN
 
 

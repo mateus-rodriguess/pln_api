@@ -1,8 +1,8 @@
-# import logging, os
-# logging.disable(logging.WARNING)
-# os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-# import logging
-# logging.getLogger('tensorflow').disabled = True
+import logging, os
+logging.disable(logging.WARNING)
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+import logging
+logging.getLogger('tensorflow').disabled = True
 
 import spacy as sp
 import numpy as np
@@ -11,8 +11,8 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
-from clean_tt.clean_tweets import clean_texts, clean_texts2
-from dm.dcnn import DCNN
+from apps.pln.dm.dcnn import DCNN
+from apps.pln.clean.clean_text import clean_text, clean_text2
 import ast
 
 
@@ -58,7 +58,7 @@ def data_clean_tt(X):
     print("--- data clean tt ---")
     nlp = sp.load('pt_core_news_sm')
 
-    data_clean = [clean_tweets2(clean_tweets(tweet), nlp) for tweet in X]
+    data_clean = [clean_text2(clean_text(tweet), nlp) for tweet in X]
     return data_clean
 
 
@@ -203,5 +203,3 @@ def main():
     print(value)
 
 
-if __name__ == "__main__":
-    main()
