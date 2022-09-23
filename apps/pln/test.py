@@ -19,7 +19,7 @@ vocab_fname = "apps/pln/services/ttVocab"
 
 
 encoder = tfds.deprecated.text.SubwordTextEncoder.load_from_file(vocab_fname)
-text = "I like you"
+text = "Veio com a capa amassada, poxa agt paga caro em um livro pra vir com a capa amassada. A caixa estava intacta, porém o livro amassado :(("
 text = encoder.encode(text)
 
 # 0 =  negativo
