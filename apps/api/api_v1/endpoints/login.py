@@ -13,7 +13,6 @@ from apps.services.username_validation import username_slugify
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from starlette.status import HTTP_401_UNAUTHORIZED
 
 router = APIRouter()
 
@@ -52,7 +51,6 @@ async def sign_up(user_data: UserCreateSchema, db: Session = Depends(get_db)):
             status_code=409,
             detail="username exist",
         )
-    get_password_hash
     user_data.username = username_slugify(user_data.username)
     hashed_password = get_password_hash(user_data.password)
 
