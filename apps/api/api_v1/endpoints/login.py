@@ -1,21 +1,19 @@
 from datetime import timedelta
-from typing import List
-
 from apps.crud import user_crud
 from apps.api.api_v1.deps import get_db
-from apps.schemas.user_schemas import (ChangePassword, UserCreateSchema, UserSchema)
+from apps.schemas.user_schemas import (
+    ChangePassword, UserCreateSchema, UserSchema)
 from apps.core.security import (ACCESS_TOKEN_EXPIRE_MINUTES,
-                                    authenticate_user, change_password,
-                                    create_access_token,
-                                    get_current_active_user, get_current_user,
-                                    get_password_hash)
+                                authenticate_user, change_password,
+                                create_access_token,
+                                get_current_active_user, get_current_user,
+                                get_password_hash)
 from apps.services.username_validation import username_slugify
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 router = APIRouter()
-
 
 
 @router.post("/login/access-token")

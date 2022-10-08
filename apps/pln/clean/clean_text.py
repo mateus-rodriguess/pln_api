@@ -1,11 +1,7 @@
 import re
 
-from bs4 import BeautifulSoup
-
-
 def clean_text(text):
     text = str(text)
-    #text = BeautifulSoup(str(text), 'lxml').get_text()
     text = re.sub(r"@[A-Za-z0-9]+", ' ', text)
     text = re.sub(r"https?://[A-Za-z0-9./]+", ' ', text)
     text = re.sub(r"[^a-zA-Z.!?]", ' ', text)
@@ -24,4 +20,4 @@ def clean_text2(text, nlp):
     # words = ' '.join([str(element) for element in words])
 
     return text
-    #eturn words
+    #return words

@@ -96,7 +96,7 @@ def train_test(data):
     y = data.iloc[:, 0].values
 
     # trabalhando so com 15% da base de 1.6m, (drop 85 da base)
-    test_size = 0.10
+    test_size = 0.5
     # stratify, amostram estratificada, mandento a proporção,
     #  (pagina 43 livro)
     X, _, y, _ = train_test_split(X, y, test_size=test_size, stratify=y)
@@ -141,7 +141,7 @@ def main():
     batch_size = 64
     nb_classes = len(set(train_labels))
     dropout_rate = 0.2
-    nb_epochs = 2
+    nb_epochs = 5
 
     Dcnn = DCNN(vocab_size=vocab_size, emb_dim=emb_dim,
                 nb_filters=nb_filters,

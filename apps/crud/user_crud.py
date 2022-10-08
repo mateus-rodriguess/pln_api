@@ -5,8 +5,8 @@ from apps.models.user_models import UserModel
 from apps.schemas.user_schemas import UserCreateSchema, UserSchema, ChangePassword
 
 
-def get_all_users(db: Session) -> List[UserModel]:
-    return db.query(UserModel).filter().all()
+def get_all_users(db: Session, limit: int):
+    return db.query(UserModel).filter().limit(limit)
 
 
 def get_user_by_username(db: Session, username: str) -> Optional[UserModel]:
