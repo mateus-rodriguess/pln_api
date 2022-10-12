@@ -161,9 +161,9 @@ def main():
     ckpt_manager = tf.train.CheckpointManager(
         ckpt, checkpoint_path, max_to_keep=5)
 
-    if ckpt_manager.latest_checkpoint:
-        ckpt.restore(ckpt_manager.latest_checkpoint)
-        print('Latest checkpoint restored')
+    # if ckpt_manager.latest_checkpoint:
+    #     ckpt.restore(ckpt_manager.latest_checkpoint)
+    #     print('Latest checkpoint restored')
 
     Dcnn.fit(train_inputs, train_labels, batch_size=batch_size,
              epochs=nb_epochs, verbose=1, validation_split=0.10)
