@@ -21,7 +21,7 @@ def accuracy(accuracy_resquest: accuracy_schema.Accuracy, db: Session = Depends(
 
 
 @router.get("/", response_model=List[accuracy_schema.AccuracyResponse],  status_code=status.HTTP_200_OK)
-def list(limit: int = 10, db: Session = Depends(get_db)):
+def list_accuracyes(limit: int = 10, db: Session = Depends(get_db)):
     """
     Home
     """

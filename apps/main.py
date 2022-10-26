@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from apps.api.api_v1.endpoints import accuracy
 
 from apps.models import accuracy_models
 from apps.models import user_models

@@ -19,11 +19,11 @@ vocab_fname = "apps/pln/services/ttVocab"
 
 
 encoder = tfds.deprecated.text.SubwordTextEncoder.load_from_file(vocab_fname)
-text = "I like you"
+text = "O produto veio errado . Na descrição está escrito aquarela e veio um giz de cera.Meu filho ficou decepcionado . Péssimo"
 text = encoder.encode(text)
 
 # 0 =  negativo
 # 1 = possitivo
 
-value = Dcnn.predict(np.array([text]))
+[[value]] = Dcnn.predict(np.array([text]))
 print(value)

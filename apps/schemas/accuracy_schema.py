@@ -3,8 +3,7 @@ from pydantic import BaseModel
 
 class Accuracy(BaseModel):
     save: bool = False
-    translate: bool = True
-    message: str = "Feedback"
+    message: str = "Ótimo produto"
 
     class Config:
         orm_mode = True
@@ -12,7 +11,7 @@ class Accuracy(BaseModel):
 
 class AccuracyResponse(BaseModel):
     accuracy: float
-    message: str = "Feedback"
+    message: str
 
     class Config:
         orm_mode = True

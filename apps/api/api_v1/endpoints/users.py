@@ -30,11 +30,11 @@ def startup():
 
 @router.get("/", response_model=List[UserResponseSchema])
 @cache()
-async def users(db: Session = Depends(get_db), current_user=Depends(get_current_user_is_admin)):
+async def users(limit: int = 10, db: Session = Depends(get_db), current_user=Depends(get_current_user_is_admin)):
     """
     Get users
     """
-    users = user_crud.get_all_users(db)
+    users = user_crud.get_all_users(db=db, limit=limit)
     return list(users)
 
 
