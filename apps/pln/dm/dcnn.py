@@ -3,10 +3,10 @@ from tensorflow import keras
 from tensorflow.keras import layers
 
 
-class DCNN(keras.Model):
+class CnnModel(keras.Model):
 
-    def __init__(self, vocab_size=52455, emb_dim=128, nb_filters=50, ffn_units=512, nb_classes=2,
-                 dropout_rate=0.1, training=True, name="dcnn"):
+    def __init__(self, vocab_size=27091, emb_dim=128, nb_filters=50, ffn_units=512, nb_classes=2,
+                 dropout_rate=0.2, training=True, name="dcnn"):
         super(DCNN, self).__init__(name=name)
 
         self.embedding = layers.Embedding(vocab_size, emb_dim)
@@ -26,10 +26,6 @@ class DCNN(keras.Model):
             self.last_dense = layers.Dense(units=1, activation='sigmoid')
         else:
             self.last_dense = layers.Dense(units=nb_classes, activation='softmax')
-
-    @classmethod
-    def from_config(cls, config):
-        return cls(**config)
 
     def call(self, inputs, training):
 

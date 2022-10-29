@@ -15,7 +15,7 @@ def clean_text2(text, nlp):
     # words = []
     # for token in document:
     #     words.append(token.text)
-
+        
     # words = [word for word in words]
     # words = ' '.join([str(element) for element in words])
 
