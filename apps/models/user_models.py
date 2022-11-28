@@ -1,9 +1,12 @@
-import uuid
 from datetime import datetime
 
-from apps.database import Base
+from apps.db.database import Base
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
+
+import uuid
 from sqlalchemy.dialects.postgresql import UUID
+def generate_uuid():
+    return str(uuid.uuid4())
 
 
 class UserModel(Base):

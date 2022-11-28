@@ -11,15 +11,11 @@ postgres_data/
 my_weights.data-00000-of-00001
 ckpt-1.data-00000-of-00001
 ckpt-1.index
-train.csv
-test.csv
 my_weights.index
 checkpoint/
 weights_folder/
 checkpoint
-ttVocab.subwords
-save_tt.txt
-trainingandtestdata/
+
 
 # Distribution / packaging
 .Python

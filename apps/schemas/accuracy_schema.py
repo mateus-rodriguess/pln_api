@@ -2,24 +2,24 @@ from pydantic import BaseModel
 
 
 class Accuracy(BaseModel):
-    message: str = "Feedback"
     save: bool = False
-    translate: bool = True
-    
+    message: str = "Ótimo produto"
+
     class Config:
         orm_mode = True
 
 
 class AccuracyResponse(BaseModel):
     accuracy: float
-    message: str = "Feedback"
+    message: str
 
     class Config:
         orm_mode = True
 
+
 class AccuracyModel(BaseModel):
-    message: str
     accuracy: float
-    
+    message: str
+
     class Config:
         orm_mode = True
