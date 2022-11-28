@@ -22,7 +22,7 @@
     ```json
         {
           {
-          "accuracy": 0.98090434523,
+          "accuracy": 0.06937646865844727,
           "message": "O produto veio estragado"
           }
         }
