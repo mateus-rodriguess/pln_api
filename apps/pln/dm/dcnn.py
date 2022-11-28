@@ -5,9 +5,9 @@ from tensorflow.keras import layers
 
 class CnnModel(keras.Model):
 
-    def __init__(self, vocab_size=27091, emb_dim=128, nb_filters=50, ffn_units=512, nb_classes=2,
-                 dropout_rate=0.2, training=True, name="dcnn"):
-        super(DCNN, self).__init__(name=name)
+    def __init__(self, vocab_size=27091, emb_dim=61, nb_filters=50, ffn_units=300, nb_classes=2,
+                 dropout_rate=0.1, training=True, name="CnnModel"):
+        super(CnnModel, self).__init__(name=name)
 
         self.embedding = layers.Embedding(vocab_size, emb_dim)
 

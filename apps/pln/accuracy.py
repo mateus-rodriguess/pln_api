@@ -5,7 +5,7 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 logging.getLogger('tensorflow').disabled = True
 
 
-from apps.pln.dm.dcnn import DCNN
+from apps.pln.dm.dcnn import CnnModel
 from apps.core.config import get_settings
 import tensorflow_datasets as tfds
 import numpy as np
@@ -17,7 +17,7 @@ def accuracy_predict(text: str):
     """
     settings = get_settings()
 
-    Dcnn = DCNN()
+    Dcnn = CnnModel()
     Dcnn.built = True
     try:
         # if the error of the file does not exist it returns float 0.0
@@ -28,6 +28,6 @@ def accuracy_predict(text: str):
         # feedback prediction
         [[accuracy]] = Dcnn.predict(np.array([text]))
         return accuracy.astype(float)
-    except Exception as erro:
-        print(erro)
+    except Exception as error:
+        print(error)
         return 0.0
