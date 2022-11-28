@@ -16,15 +16,13 @@
   * Request payload
     ```json
         {
-          "message": "I hate you",
-          "save": false,
-          "translate": false
+          "message": "O produto veio estragado"
         }
   * Response payload
     ```json
         {
           {
-          "accuracy": 0.45894283056259155,
-          "message": "I hate you"
+          "accuracy": 0.98090434523,
+          "message": "O produto veio estragado"
           }
         }
