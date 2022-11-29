@@ -6,7 +6,7 @@ logging.getLogger('tensorflow').disabled = True
 
 import ast
 from apps.pln.clean.clean_text import clean_text, clean_text2
-from apps.pln.dm.dcnn import CnnModel
+from apps.pln.cnn.cnn import cnn_model
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 import tensorflow_datasets as tfds
@@ -134,30 +134,30 @@ def main():
     print(f"len test {len(X_test)} --- {len(y_test)}")
 
     vocab_size = tokenizer.vocab_size
-    emb_dim = 61
+    emb_dim = 200
     nb_filters = 100
-    ffn_units = 100
-    batch_size = 124
+    ffn_units = 256
+    batch_size = 64
     nb_classes = len(set(y_train))
-    dropout_rate = 0.1
-    nb_epochs = 4
+    dropout_rate = 0.2
+    nb_epochs = 5
 
-    cnnmodel = CnnModel(vocab_size=vocab_size, emb_dim=emb_dim, nb_filters=nb_filters, ffn_units=ffn_units, nb_classes=nb_classes, dropout_rate=dropout_rate)
+    model = cnn_model(vocab_size=vocab_size, emb_dim=emb_dim, nb_filters=nb_filters, ffn_units=ffn_units, nb_classes=nb_classes, dropout_rate=dropout_rate)
 
     if nb_classes == 2:
-        cnnmodel.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     else:
         print("--- mais de 2 classes")
-        cnnmodel.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+        model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-    cnnmodel.fit(X_train, y_train, batch_size=batch_size, epochs=nb_epochs, verbose=1, validation_split=0.10)
+    model.fit(X_train, y_train, batch_size=batch_size, epochs=nb_epochs, verbose=1, validation_split=0.2)
 
     print("-- evaluate --")
-    results = cnnmodel.evaluate(X_test, y_test, batch_size=batch_size)
+    results = model.evaluate(X_test, y_test, batch_size=batch_size)
     print(results)
 
     # print("-- y_pred_test ---")
-    y_pred_test = cnnmodel.predict(X_test)
+    y_pred_test = cnn_model.predict(X_test)
     # print(y_pred_test)
 
     y_pred_test = (y_pred_test > 0.5)
@@ -170,7 +170,7 @@ def main():
 
     print("--- salve ---")
     path = 'apps/pln/weights_folder/my_weights'
-    cnnmodel.save_weights(path, save_format='tf')
+    cnn_model.save_weights(path, save_format='tf')
     print('Model Saved!')
     print("-------------------------------------------------------------------------")
     
@@ -186,5 +186,5 @@ def main():
     vocab_fname = "apps/pln/services/ttVocab"
     encoder = tfds.deprecated.text.SubwordTextEncoder.load_from_file(vocab_fname)
     text = encoder.encode(text)
-    value = cnnmodel(np.array([text]), training=False).numpy()
+    value = model(np.array([text]), training=False).numpy()
     print(value)

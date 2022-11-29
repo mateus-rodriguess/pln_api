@@ -2,9 +2,7 @@ import re
 
 def clean_text(text):
     text = str(text)
-    text = re.sub(r"@[A-Za-z0-9]+", ' ', text)
     text = re.sub(r"https?://[A-Za-z0-9./]+", ' ', text)
-    text = re.sub(r"[^a-zA-Z.!?]", ' ', text)
     text = re.sub(r" +", ' ', text)
     return text
 

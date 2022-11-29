@@ -5,15 +5,15 @@ import logging
 logging.getLogger('tensorflow').disabled = True
 
 import numpy as np
-from dm.dcnn import DCNN
+from apps.pln.cnn.cnn import cnn_model
 import tensorflow_datasets as tfds
 
 
-Dcnn = DCNN()
-Dcnn.built = True
+model = cnn_model()
+model.built = True
 
 path = 'apps/pln/weights_folder/my_weights'
-Dcnn.load_weights(path).expect_partial()
+model.load_weights(path).expect_partial()
 
 vocab_fname = "apps/pln/services/ttVocab"
 
@@ -25,5 +25,5 @@ text = encoder.encode(text)
 # 0 =  negativo
 # 1 = possitivo
 
-[[value]] = Dcnn.predict(np.array([text]))
+[[value]] = model.predict(np.array([text]))
 print(value)
