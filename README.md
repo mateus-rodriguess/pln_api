@@ -1,5 +1,12 @@
-# pln_api
+# PLN API
+Este projeto é uma API para análise de processamento de linguagem natural.
 
+## Tecnologias Utilizadas
+Este projeto faz uso das seguintes tecnologias:
+- Machine Learning
+- TensorFlow
+- scikit-learn
+  
 ### Como usar: 
   * Rodar comando docker
     ```bash
